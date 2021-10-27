@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クラスバインディング</title>
+</head>
+<style>
+    .red {
+        color: red;
+    }
+    .bg-blue {
+        background-color: blue;
+    }
+
+</style>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <div id="app">
+        <h1 :class="classObj">こんにちは</h1>
+        <button @click="isActive = !isActive">真偽値でスタイルを切り替える</button>
+
+        <h1 :class="[{red: isActive}, bg]">こんにちわ</h1>
+
+        <!--  オブジェクトを用いて動的にバインディグ-->
+        <h1 :style="{color: textColor, 'background-color': bgColor}">こんにちわ</h1>
+
+        <!-- スタイルオブジェクトをデータに書いて -->
+        <h1 :style="styleObj"> スタイルオブジェクト</h1>
+
+        <!-- 複数のスタイルオブジェクトを配列構文を用いて適応させる -->
+        <h1 :style="[styleObj, baseStyle]">複数のスタイルオブジェクトを配列構文を用いて適応させる</h1>
+      </div>
+      <script>
+        new Vue ({
+            el: '#app',
+            data:{
+                isActive: true,
+                color: 'red',
+                bg: 'bg-blue',
+                textColor: 'red',
+                bgColor: 'blue',
+                styleObj: {
+                    color: 'red',
+                    'background-color': 'blue'
+                },
+                baseStyle: {
+                    fontSize: '50px'
+                }
+            },
+            computed: {
+                classObj: function() {
+                    return {
+                        red: this.isActive,
+                        'bg-blue' : !this.isActive
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
