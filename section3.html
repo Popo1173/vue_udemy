@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <div id="app">
+<!-- 条件付きレンダリング v-if-->
+        <!-- v-ifの後にelseに書く -->
+        <p v-if="ok">OK</p>　<!-- trueの条件 -->
+        <p v-else-if="maybeOK">maybe OK!</p>
+        <p v-else>NOT OK</p>　<!-- falseの条件 -->
+        <!-- <templet>タグはタグが表示されない グルーピングするためのもの-->
+        <template v-if="ok">
+            <p>HELLO</p>
+            <p>goodbye</p>
+            <p>SEEyou</p>
+        </template>
+        <button @click="ok = !ok">条件変更</button>
+<!--  v-show　-->
+<!-- 　ifとshowの違い
+　if：　要素ごと消し去る
+    └ 切り替えるたび要素を削除している 頻繁に切り替えるとコストが高い
+　show：　dislpay: no で消し去る（templet　v-show=""が使えない） 
+    └ 初期描画が遅い　全てDOMに表示するため
+
+    まとめ
+    頻繁に切り替えがある場合は、v-show
+    条件が実行時に変わらない場合は、v-if
+-->　
+
+<!-- v-for -->
+<!-- 
+    <li v-for="fruit in fruits">{{fruit}}</li>
+        v-for="fruit in fruits" {{fruit}}
+        「fruit」部分が引数になるので、test in fruitsなんでもOK
+
+    <li v-for="(fruit, index) in fruits">({{index}}){{fruit}}</li>
+         第二引数も取ることができる
+         引数なので、名前はiでもOK
+
+    <li v-for="value in object">{{value}}</li>         
+        オブジェクトも取得できる
+        第二、三の引数とれる
+        ※オブジェクトの順番は保証されていない
+        object: {
+            firstName: '太郎',
+            lastName: '山田',
+            age: '21'
+        }
+        オブジェクトの第一引数は、valueを取る
+        オブジェクトの第二引数は、keyを取る
+        オブジェクトの第三引数は、indexを取る
+
+        <templet>タグは副作用が起きにくいため、積極的に利用する
+            
+        <li v-for="n in 10">{{n}}</li>
+            単純な整数も取得することができる
+        
+        ちなみに、「value of object"」「of」にしても問題ない
+        JSのイテレーター構文では、　ofで書くが通例
+
+        
+        v-for　を使うときは必ず「:key=""」属性を使用する。
+            <div v-for="fruit in fruits" :key="fruit">
+            └ ないとバグの温床になる
+            └一意のkeyを与える　配列の対応付をする必要がある
+            └一意のkeyを利用する場合は、templateタグは利用できない
+            　indexは順番になるため、
+
+ -->
+    <ul>
+        <!-- <li v-for="(fruit, index) in fruits">{{fruit}}</li> -->
+        <!-- <li v-for="(fruit, index) in fruits">({{index}}){{fruit}}</li> -->
+        <!-- <li v-for="value in object">{{value}}</li> -->
+        <li v-for="(value, key, index) in object">第一引数：{{value}}<br>第二引数：{{key}}<br>第三引数：{{index}}</li>
+    </ul>
+    <ul>
+        <li v-for="fruit in fruits">{{fruit}}</li><hr>
+    </ul>
+    <ul>
+        <template v-for="fruit in fruits">
+            <li>{{fruit}}</li><hr>
+        </template>
+    </ul>
+    単純な整数値も取得することができる
+    <ul>
+        <li v-for="n in 10">{{n}}</li>
+    </ul>
+    <ul>
+        <div v-for="fruit in fruits" :key="fruit">
+            <p>{{fruit}}</p>
+            <input type="text">
+        </div>
+    </ul>
+    <button @click="remove">先頭を削除</button>
+    </ul>      
+      </div> 
+      <script>
+        new Vue ({
+            el: '#app',
+            data:{
+                ok: true,
+                // maybeOK: false
+                fruits: ['りんご'　,'バナナ','ぶどう'],
+
+                // オブジェクト
+                object: {
+                    firstName: '太郎',
+                    lastName: '山田',
+                    age: '21'
+                }
+            },
+            methods: {
+                remove: function() {
+                    this.fruits.shift()
+                }
+            }
+        })
+    </script>
+</body>
+</html>
