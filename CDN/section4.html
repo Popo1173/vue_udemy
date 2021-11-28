@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>section4</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- <div id="app01"><p>{{message}}</p></div>  -->
+    <div>
+        <div id="app">
+            <p>{{myData}}</p>
+            <p>{name}}}</p>
+            <p>{myData}}}</p>
+            <button @click="message == 'ボタンから変更'" >変更</button>
+        </div>
+        <hello></hello>
+        <div id="app2"></div> 
+        <div id="app3"></div> 
+        <div id="app4">
+            <h1>こんにちわ{{ name }}</h1>
+            <button @click="name = 'たけし'" >変更</button>
+            <button @click="destroy">インスタンスを破壊</button>
+        </div> 
+    </div>
+      <script>
+        var data = {
+            message: 'こんにちは',
+            name: '太郎'
+        }
+
+        var vm = new Vue ({
+            el: '#app',
+            data: data,
+            computed: {
+                myData: function(){
+                    return this.$data
+                }
+            }
+        })
+
+        vm.$mount('#app')
+
+        new Vue ({
+            el: '#app2',
+            data: {
+                message: 'こんにちわ',
+                name: '太郎'
+            },
+            template: '<h1>テンプレートプロパティ{{name}}<h1>'
+        })
+
+        Vue.component('hello',{
+            template: '<p>こんにちは</p>'
+        });
+
+        new Vue ({
+            data: {
+                message: 'こんにちわ',
+                name: '太郎'
+            },
+            render: function(createElement) {
+                console.log(createElement('h1', 'こんにちわ' + this.name))
+                return createElement('h1', 'こんにちわ' + this.name)
+            },
+        }).$mount('#app3')           
+
+        //外側からアクセスする
+        // console.log(data === vm.$data)
+        // console.log(vm)
+        var dir = document.createElement('div')
+        console.log(dir)
+        console.dir(dir)
+        console.log(document)
+        console.dir(document)
+
+
+
+        new Vue({
+            el: '#app4',
+            data: {
+                name: '太郎'
+            },
+            beforeCreate: function(){
+                console.log('beforeCreate')
+            },
+            created: function(){
+                console.log('created')
+            },
+            beforeMounte: function(){
+                console.log('beforeMounte')
+            },
+            mounted: function(){
+                console.log('mounted')
+            },     
+            beforeUpdate: function(){
+                console.log('beforeUpdate')
+            },  
+            updated: function(){
+                console.log('updated')
+            },
+            beforeDestroy : function(){
+                console.log('beforeDestroy') 
+            },  
+            destroyed : function(){
+                console.log('destroyed') 
+            },
+            methods: {
+                destroy: function(){
+                    this.$destroy()
+                }
+            }
+        })
+    </script>
+</body>
+</html>
