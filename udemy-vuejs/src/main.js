@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-import LinkeNmuber from "./LinkeNmuber"
+import LinkeNmuber from "./components/LinkeNmuber"
 
 Vue.config.productionTip = false
+// グローバル登録
 Vue.component('LinkeNmuber', LinkeNmuber);
 
 new Vue({
