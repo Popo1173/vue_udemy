@@ -1,7 +1,19 @@
 <template>
   <div>
-    <LikeHeader />
-    <LinkeNmuber />
+    <LikeHeader></LikeHeader>
+    <h2>{{ number }}</h2>
+    
+    <!--
+      子コンポーネントからデータを受け取る 
+      v-on:my-click="number = $event"
+      イベントをnumberに代入する
+      -->
+    <!-- <LikeNumber :totalNumber="number" @my-click="number = $event"></LikeNumber> -->
+
+    <!-- metodsで書く場合 -->
+    <LikeNumber :totalNumber="number" @my-click="incrementNumber"></LikeNumber>
+
+    <LikeNumber :totalNumber="number"></LikeNumber>
   </div>
 </template>
 
@@ -10,9 +22,24 @@
 import LikeHeader from "./components/LikeHeader.vue"
 
 export default {
+  data() {
+    return {
+      number: 10
+    }
+  },
+  
   //ローカルコンポーネント登録
   components: {
     LikeHeader
+  },
+
+  methods: {
+    incrementNumber(value) {
+      //子コンポーネントの第二引数をとる事ができる
+      //this.$emit("my-click", this.totalNumber + 1);
+      //this.totalNumber + 1)
+      this.number = value
+    }
   }
 }
 </script>
