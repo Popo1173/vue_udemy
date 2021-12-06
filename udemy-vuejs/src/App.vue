@@ -1,7 +1,16 @@
 <template>
   <div>
-    <LikeHeader></LikeHeader>
-    <h2>{{ number }}</h2>
+    <LikeHeader>
+      <p>おはよう</p>
+      <template v-slot:title>
+        <h1>トータルのいいね数</h1>
+      </template>
+      <template v-slot:number>
+        <h2>{{ number }}</h2>
+      </template>
+      <p>こんにちわ</p>
+      <p>こんばんわ</p>
+    </LikeHeader>
     
     <!--
       子コンポーネントからデータを受け取る 
