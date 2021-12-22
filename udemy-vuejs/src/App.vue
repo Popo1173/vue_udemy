@@ -1,45 +1,43 @@
 <template>
   <div>
     <LikeHeader>
-      <p>おはよう</p>
-      <template v-slot:title>
-        <h1>トータルのいいね数</h1>
-      </template>
-      <template v-slot:number>
-        <h2>{{ number }}</h2>
-      </template>
-      <p>こんにちわ</p>
-      <p>こんばんわ</p>
-    </LikeHeader>
-    
-    <!--
-      子コンポーネントからデータを受け取る 
-      v-on:my-click="number = $event"
-      イベントをnumberに代入する
-      -->
-    <!-- <LikeNumber :totalNumber="number" @my-click="number = $event"></LikeNumber> -->
-
-    <!-- metodsで書く場合 -->
+      <h3>はじめまして</h3>
+    </LikeHeader>      
     <LikeNumber :totalNumber="number" @my-click="incrementNumber"></LikeNumber>
 
-    <LikeNumber :totalNumber="number"></LikeNumber>
+    <button @click="currentComponent = 'Home'">Home</button>
+    <button @click="currentComponent = 'About'">About</button>
+    
+    <!-- 
+      動的コンポーネントは切り替わる度にdestroyedされるため、キャッシュする仕組みをいれる
+      それが<keep-alive>タグ
+      通常：<component :is="currentComponent"></component>
+    -->
+    <keep-alive>
+      <component :is="currentComponent"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
   //ローカルコンポーネント登録
-import LikeHeader from "./components/LikeHeader.vue"
+import LikeHeader from "./components/LikeHeader.vue";
+import About from "./components/About.vue";
+import Home from "./components/Home.vue";
 
 export default {
   data() {
     return {
-      number: 10
+      number: 10,
+      currentComponent: "Home"
     }
   },
   
   //ローカルコンポーネント登録
   components: {
-    LikeHeader
+    LikeHeader,
+    About,
+    Home
   },
 
   methods: {
