@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js Appccc"/>
+  <div>
+    <LikeHeader>
+      <h3>はじめまして</h3>
+    </LikeHeader>      
+    <LikeNumber :totalNumber="number" @my-click="incrementNumber"></LikeNumber>
+
+    <button @click="currentComponent = 'Home'">Home</button>
+    <button @click="currentComponent = 'About'">About</button>
+    
+    <!-- 
+      動的コンポーネントは切り替わる度にdestroyedされるため、キャッシュする仕組みをいれる
+      それが<keep-alive>タグ
+      通常：<component :is="currentComponent"></component>
+    -->
+    <keep-alive>
+      <component :is="currentComponent"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  //ローカルコンポーネント登録
+import LikeHeader from "./components/LikeHeader.vue";
+import About from "./components/About.vue";
+import Home from "./components/Home.vue";
 
 export default {
-  name: 'App',
+  data() {
+    return {
+      number: 10,
+      currentComponent: "Home"
+    }
+  },
+  
+  //ローカルコンポーネント登録
   components: {
-    HelloWorld
+    LikeHeader,
+    About,
+    Home
+  },
+
+  methods: {
+    incrementNumber(value) {
+      //子コンポーネントの第二引数をとる事ができる
+      //this.$emit("my-click", this.totalNumber + 1);
+      //this.totalNumber + 1)
+      this.number = value
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
