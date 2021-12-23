@@ -6,16 +6,20 @@
     <LikeNumber :totalNumber="number" @my-click="incrementNumber"></LikeNumber>
 
     <button @click="currentComponent = 'Home'">Home</button>
-    <button @click="currentComponent = 'About'">About</button>
-    
-    <!-- 
-      動的コンポーネントは切り替わる度にdestroyedされるため、キャッシュする仕組みをいれる
-      それが<keep-alive>タグ
-      通常：<component :is="currentComponent"></component>
-    -->
+    <button @click="currentComponent = 'About'">About</button>    
     <keep-alive>
       <component :is="currentComponent"></component>
     </keep-alive>
+    <div>
+      <h2>イベントカスタム</h2>
+      <label for="title">タイトル</label>
+      <input 
+        id="title" 
+        type="text" 
+        v-model.lazy="eventData.title"
+      >
+      <p>{{eventData.title}}</p>
+    </div>
   </div>
 </template>
 
@@ -29,7 +33,10 @@ export default {
   data() {
     return {
       number: 10,
-      currentComponent: "Home"
+      currentComponent: "Home",
+      eventData: {
+        title: "タイトル"
+      }
     }
   },
   
