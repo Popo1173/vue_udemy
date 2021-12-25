@@ -12,14 +12,24 @@
     </keep-alive>
     <div>
       <h2>イベントカスタム</h2>
-      <label for="title">タイトル</label>
+      <label for="MaxNumber">タイトル</label>
       <input 
-        id="title" 
-        type="text" 
-        v-model.lazy="eventData.title"
+        id="MaxNumber" 
+        type="number" 
+        v-model.number="eventData.MaxNumber"
       >
-      <p>{{eventData.title}}</p>
+      <p>{{ typeof eventData.MaxNumber}}</p>
     </div>
+    <div>
+      <h2>主催者</h2>
+      <label for="host">タイトル</label>
+      <input 
+        id="host" 
+        type="text" 
+        v-model.trim="eventData.host"
+      >
+      <p>{{ eventData.host}}</p>
+    </div>    
   </div>
 </template>
 
@@ -35,7 +45,10 @@ export default {
       number: 10,
       currentComponent: "Home",
       eventData: {
-        title: "タイトル"
+        title: "タイトル",
+        MaxNumber: 0,
+        host: ""
+
       }
     }
   },
