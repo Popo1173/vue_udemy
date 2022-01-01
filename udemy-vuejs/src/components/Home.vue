@@ -3,13 +3,18 @@
     <p v-border="'25px'">Home</p>
     <!-- 引数(dotted).修飾士 = {オブジェクトを渡す} -->
     <p v-border:dotted.round.shadow="{ width: '5px', color: 'red' }">
-      オブジェクト
+      {{ tmpData }}
     </p>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      tmpData: "ハロー",
+    };
+  },
   directives: {
     //関数
     //elは、カスタムディレクティブが紐づく要素
