@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
-import LikeNumber from "./components/LikeNumber"
+import Vue from "vue";
+import App from "./App.vue";
+import LikeNumber from "./components/LikeNumber";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 // グローバル登録
-Vue.component('LikeNumber', LikeNumber);
+Vue.component("LikeNumber", LikeNumber);
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");
