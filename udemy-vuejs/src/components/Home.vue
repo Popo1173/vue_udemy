@@ -5,16 +5,36 @@
     <p v-border:dotted.round.shadow="{ width: '5px', color: 'red' }">
       {{ tmpData }}
     </p>
+    <p>大文字</p>
+    <h2>{{ title | upperCase }}</h2>
+    <h3>{{ subTitle | upperCase }}</h3>
+    <p>{{ number }}</p>
+    <button @click="number++">+1</button>
+    <CountNumber />
   </div>
 </template>
 
 <script>
+import CountNumber from "./CountNumber.vue";
+import { tokyoNumber } from "@/tokyoNumber";
+
 export default {
+  mixins: [tokyoNumber],
+
   data() {
     return {
       tmpData: "ハロー",
     };
   },
+
+  created() {
+    console.log("created in components");
+  },
+
+  components: {
+    CountNumber,
+  },
+
   directives: {
     //関数
     //elは、カスタムディレクティブが紐づく要素
