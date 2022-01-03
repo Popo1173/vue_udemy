@@ -1,118 +1,182 @@
 <template>
-  <div>
-    <LikeHeader v-my>
-      <h3>はじめまして</h3>
-    </LikeHeader>
-    <LikeNumber :totalNumber="number" @my-click="incrementNumber"></LikeNumber>
+  <div class="main">
+    <button @click="myAnimation = 'slide'">Slide</button>
+    <button @click="myAnimation = 'fade'">Fade</button>
+    <p>{{ myAnimation }}</p>
 
-    <button @click="currentComponent = 'Home'">Home</button>
-    <button @click="currentComponent = 'About'">About</button>
-    <keep-alive>
-      <component :is="currentComponent"></component>
-    </keep-alive>
-    <div>
-      <h2>イベント</h2>
-      <EventTitle v-model="eventData.title"></EventTitle>
-      <!-- <EventTitle
-        :value="eventData.title"
-        @input="eventData.title = $event"
-      ></EventTitle> -->
-      <div>
-        <label for="MaxNumber">最大人数</label>
-        <input
-          id="MaxNumber"
-          type="number"
-          v-model.number="eventData.MaxNumber"
-        />
-        <p>{{ typeof eventData.MaxNumber }}</p>
-      </div>
-    </div>
-    <div>
-      <h2>主催者</h2>
-      <label for="host">タイトル</label>
-      <input id="host" type="text" v-model.trim="eventData.host" />
-      <pre>{{ eventData.host }}</pre>
-      <label for="detail">イベントの内容</label>
-      <textarea
-        id="detail"
-        cols="40"
-        rows="10"
-        v-model="eventData.detail"
-      ></textarea>
-      <p style="white-space: pre">{{ eventData.detail }}</p>
+    <button @click="show = !show">切り替え</button>
+    <br />
+    <br />
+    <!-- jsフックが8つある :css="false" CSSを利用しないの明示CSSの処理をスキップできる-->
+    <transition
+      name="fade"
+      :css="false"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @after-enter="afterEnter"
+      @enter-cancelled="enterCancelled"
+      @before-leave="beforeLeave"
+      @leave="leave"
+      @after-leave="afterLeave"
+      @leave-cancelled="leaveCancelled"
+    >
+      <div class="circle" v-if="show"></div>
+    </transition>
+    <br />
+    <button @click="myComponent = 'FadeA'">ComponentA</button>
+    <button @click="myComponent = 'FadeB'">ComponentB</button>
+    <transition name="fade" mode="out-in">
+      <component :is="myComponent" name="aaa"></component>
+    </transition>
 
-      <input type="checkbox" id="isPrivate" v-model="eventData.isPrivate" />
-      <label for="isPrivate">非公開</label>
-      <pre>{{ eventData.isPrivate }}</pre>
-      <p>参加条件</p>
-      <input type="checkbox" id="10" value="10代" v-model="eventData.target" />
-      <label for="10">10代</label>
-      <input type="checkbox" id="20" value="20代" v-model="eventData.target" />
-      <label for="20">20代</label>
-      <input type="checkbox" id="30" value="30代" v-model="eventData.target" />
-      <label for="30">30代</label>
-      <p>{{ eventData.target }}</p>
+    <transition name="fade" mode="out-in">
+      <p v-if="show" key="bye">さよなら</p>
+      <p v-if="!show" key="hello">こんにちわ</p>
+    </transition>
 
-      <p>参加費</p>
-      <input type="radio" id="free" value="無料" v-model="eventData.price" />
-      <label for="free">無料</label>
-      <input type="radio" id="paid" value="有料" v-model="eventData.price" />
-      <label for="free">有料</label>
+    <transition
+      enter-active-class="animate__animated animate__bounce"
+      leave-active-class="animate__animated animate__flash"
+      appear
+    >
+      <p v-if="show">ABCD</p>
+    </transition>
 
-      <p>開催場所</p>
-      <!-- 複数の選択させるとき<select v-model="eventData.location" multiple>-->
-      <select v-model="eventData.location">
-        <option v-for="location in locations" :key="location">
-          {{ location }}
-        </option>
-      </select>
-      <p>{{ eventData.location }}</p>
-    </div>
+    <transition :name="myAnimation" appear>
+      <p v-show="show">EFGH</p>
+    </transition>
   </div>
 </template>
 
 <script>
-//ローカルコンポーネント登録
-import LikeHeader from "./components/LikeHeader.vue";
-import About from "./components/About.vue";
-import Home from "./components/Home.vue";
-import EventTitle from "./components/EventTitle.vue";
+import FadeA from "./components/FadeA.vue";
+import FadeB from "./components/FadeB.vue";
 
 export default {
+  component: {
+    FadeA,
+    FadeB,
+  },
+
   data() {
     return {
-      number: 10,
-      currentComponent: "Home",
-      locations: ["東京", "大阪", "名古屋"],
-      eventData: {
-        title: "タイトル",
-        MaxNumber: 0,
-        host: "",
-        detail: "",
-        isPrivate: false,
-        target: [],
-        price: "無料",
-        location: "東京",
-        //location: [], selectでmultiple使うときは配列にする
-      },
+      show: true,
+      myAnimation: "slide",
+      myComponent: "FadeA",
     };
   },
-
-  //ローカルコンポーネント登録
-  components: {
-    LikeHeader,
-    About,
-    Home,
-    EventTitle,
-  },
-
   methods: {
-    incrementNumber(value) {
-      //子コンポーネントの第二引数をとる事ができる
-      //this.$emit("my-click", this.totalNumber + 1);
-      //this.totalNumber + 1)
-      this.number = value;
+    //CSSと併用して利用する　両方最後まで処理が続く　done()をつけるとCSSの処理も含めて終了させる
+    //css使わない場合は必ずdone()をつける
+    beforeEnter() {
+      //現れる前
+    },
+    enter(el, done) {
+      //現れる時　done()として非同期の時に使う　●●秒したら終わるなど
+      let scale = 0;
+      const interval = setInterval(() => {
+        el.style.transform = `scale(${scale})`;
+        scale += 0.1;
+        if (scale > 1) {
+          clearInterval(interval);
+          done();
+        }
+      }, 20);
+    },
+    afterEnter(el) {
+      //現れると後
+    },
+    enterCancelled(el) {
+      //現れるアニメーションがキャンセルされる時
+    },
+    beforeLeave(el) {
+      //消える前
+    },
+    leave(el, done) {
+      //消えるとき
+      let scale = 1;
+      const interval = setInterval(() => {
+        el.style.transform = `scale(${scale})`;
+        scale -= 0.1;
+        if (scale < 0) {
+          clearInterval(interval);
+          done();
+        }
+      }, 20);
+    },
+    afterLeave(el) {
+      //消えた後
+    },
+    leaveCancelled(el) {
+      //消えるアニメーションがキャンセルされる時
+      //v-showの時だけ利用できる
     },
   },
 };
 </script>
+
+<style scoped>
+.circle {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  border-radius: 100px;
+  background-color: deeppink;
+}
+
+.fade-enter {
+  /* 現れる時の最初の状態 */
+  opacity: 0;
+}
+.fade-enter-active {
+  /* 現れる時のトランジションの状態 */
+  transition: 0.5s;
+}
+.fade-enter-to {
+  /* 現れる時の最後の状態 */
+  opacity: 1;
+}
+.fade-leave {
+  /* 消える時の最初の状態 */
+  opacity: 1;
+}
+.fade-leave-active {
+  /* 消える時のトランジションの状態 */
+  transition: 0.5s;
+}
+.fade-leave-to {
+  /* 消える時の最後の状態 */
+  opacity: 0;
+}
+
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+}
+.slide-enter-active {
+  animation: slide-in 0.5s;
+  transition: 5s;
+}
+.slide-leave-active {
+  /* 逆再生 */
+  animation: slide-in 0.5s reverse;
+  transition: 5s;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.main {
+  padding-top: 5rem;
+  width: 70%;
+  margin: auto;
+  text-align: center;
+}
+</style>
