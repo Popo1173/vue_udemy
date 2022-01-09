@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Home</h3>
+    <h3>Home.vue</h3>
     <button @click="toUsers">Usersページにいく</button>
   </div>
 </template>

@@ -13,6 +13,7 @@ export default new Router({
   //URLとコンポーネントをマッピングする
   routes: [
     { path: "/", component: Home },
-    { path: "/users/:id", component: Users },
+    //props: true にすることで、idがpropsとして渡させる
+    { path: "/users/:id", component: Users, props: true },
   ],
 });

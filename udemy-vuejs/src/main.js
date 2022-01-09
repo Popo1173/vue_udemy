@@ -8,6 +8,7 @@ Vue.config.productionTip = false;
 Vue.component("LikeNumber", LikeNumber);
 
 new Vue({
+  //routerを登録する
   router,
   render: (h) => h(App),
 }).$mount("#app");
