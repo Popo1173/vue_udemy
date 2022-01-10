@@ -47,4 +47,33 @@ export default new Router({
       redirect: {path: '/'}
     }
   ],
+  //スクロールビヘイビア関数
+  scrollBehavior(to, from, savedPosition) {
+    //非同期の型を返す
+    return new Promise(resolve => {
+      //
+      this.app.$root.$once('triggerScroll', () => {
+        let position = ({x: 0, y:100 })
+
+        //飛ぶ前の位置をとる
+        if(savedPosition) {
+          position = savedPosition;
+        }
+        //ハッシュアがあった時
+        if(to.hash){
+          position = {
+            selector: to.hash 
+          }
+        }
+        resolve(position)
+      })
+    }) 
+
+    //return { x: 0, y: 0}
+    //指定したハッシュまで移動する
+    // return {
+    //   selector: '#next-user',
+    //   offset: { x: 0, y: 100}
+    // };
+  }
 });

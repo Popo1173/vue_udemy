@@ -5,7 +5,16 @@
       <router-link to="/" active-class="link--active" exact class="link">
         HeaderHome-Home-Navi
       </router-link>
-      <router-link to="/users" active-class="link--active" exact class="link">
+      <router-link 
+          :to="{ 
+          name: 'user-id-profile', 
+          params: { id: Number(id) + 1}, 
+          query: {lang: 'ja', page: 2},
+          hash :'#next-user'
+        }"
+        active-class="link--active" 
+        exact class="link"
+      >
         HeaderHome-Users-Navi
       </router-link>
     </nav>
