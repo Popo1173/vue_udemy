@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h3>Home.vue</h3>
-    <button @click="toUsers">Usersページにいく</button>
+    <h3>Home</h3>
+    <button @click="toUsers">Usersのページに行く</button>
   </div>
 </template>
 
@@ -9,12 +9,11 @@
 export default {
   methods: {
     toUsers() {
-      // this.$router.push("users");
       this.$router.push({
-        name: "user-id-profile",
+        name: "users-id-profile",
         params: { id: 1 }
-      })
-    },
-  },
+      });
+    }
+  }
 };
 </script>

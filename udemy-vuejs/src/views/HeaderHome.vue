@@ -1,24 +1,19 @@
 <template>
-  <div>
-    <h2>HeaderHome</h2>
-    <nav>
-      <router-link to="/" active-class="link--active" exact class="link">
-        HeaderHome-Home-Navi
-      </router-link>
-      <router-link 
-          :to="{ 
-          name: 'user-id-profile', 
-          params: { id: Number(id) + 1}, 
-          query: {lang: 'ja', page: 2},
-          hash :'#next-user'
-        }"
-        active-class="link--active" 
-        exact class="link"
-      >
-        HeaderHome-Users-Navi
-      </router-link>
-    </nav>
-  </div>
+  <nav>
+    <h2>Home</h2>
+    <router-link
+      to="/"
+      active-class="link--active"
+      exact
+      class="link"
+    >Home</router-link>
+    <router-link
+      :to="{ name: 'users-id-profile', params: { id: 1 }, query: { lang: 'ja', page: 2 }, hash: '#next-user' }"
+      active-class="link--active"
+      exact
+      class="link"
+    >Users</router-link>
+  </nav>
 </template>
 
 <style scoped>
