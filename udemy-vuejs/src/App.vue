@@ -4,12 +4,24 @@
     <!-- <transition name="fade" mode="out-in"> -->
       <router-view></router-view>
     <!-- </transition> -->
-    <transition name="fade" mode="out-in">
+    <transition name="fade" mode="out-in" @befor-enter="beforEnter">
       <router-view></router-view>
     </transition>
   </div>
 </template>
 
+
+<script>
+export default {
+  methods: {
+    beforEnter () {
+    //scrollBehaviorを実行する
+    //this.$root一番上のインスタンにアクセスするこの場合はmain.jsのvueインスタンス
+      this.$root.$emit('triggerScroll')
+    }
+  }
+}
+</script>
 <style scoped>
 .fade-enter,.fade-leave-to {
   opacity: 0;

@@ -36,5 +36,21 @@ export default {
   //propsすることで、他コンポーネントからでも利用できる
   //中身は受け取るidを入れる
   props: ["id"],
+
+  //インスタンス作成まえに実行される（thisは使えない）
+  beforeRouteEnter(to, from, next){
+    //ただ、nextの中で利用できる非同期てきな処理を書く事ができる
+    next(vm => {
+
+    });
+  }
+  //インスタンスが増減しない時に実行される（値が変更されない時）
+  beforeRouteUpdate(to, from, next){
+    next();
+  }
+  //ページを離れる時
+  beforeRouteLeave(to, from, next){
+    next();
+  }    
 };
 </script>

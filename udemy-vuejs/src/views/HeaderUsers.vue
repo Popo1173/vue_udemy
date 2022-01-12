@@ -3,10 +3,10 @@
     <h2>HeaderUser</h2>
     <nav>
       <router-link to="/" active-class="link--active" exact class="link">
-        Header-User-Navi
+        HeaderUser-Home-Navi
       </router-link>
       <router-link to="/users" active-class="link--active" exact class="link"
-        >Header-User-Navi</router-link
+        >HeaderUser-User-Navi</router-link
       >
     </nav>
   </div>
