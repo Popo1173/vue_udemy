@@ -5,13 +5,13 @@
     <p>{{ doubleCount }}</p>
     <p>{{ tripleCount }}</p>
     <!-- <input type="text" :value="message" @input="updateMessage"> -->
-    <input type="text" v-model="message">
-    <p>{{message}}</p>
+    <input type="text" v-model="message" />
+    <p>{{ message }}</p>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex"
 
 export default {
   computed: {
@@ -22,25 +22,25 @@ export default {
     message: {
       //v-modelに入力された時
       get() {
-        return this.$store.getters.message;
+        return this.$store.getters.message
       },
       //target.valueに入力された値
       set(value) {
         this.$store.dispatch("updateMessage", value)
-      }
-    }
+      },
+    },
   },
-  
+
   methods: {
-    updateMessage(e){
-      this.$store.dispatch("updateMessage", e.target.value);
+    updateMessage(e) {
+      this.$store.dispatch("updateMessage", e.target.value)
     },
     toUsers() {
       this.$router.push({
         name: "users-id-profile",
-        params: { id: 1 }
-      });
-    }
-  }
-};
+        params: { id: 1 },
+      })
+    },
+  },
+}
 </script>
